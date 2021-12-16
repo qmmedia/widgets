@@ -1,8 +1,7 @@
 (function RTWidgets(){
 
-  function isHidden(el) {
-    var style = window.getComputedStyle(el);
-    return (style.display === 'none')
+  function isVisible(el) {
+    !(window.getComputedStyle(el).display === "none")
   }
 
   function isRTWidgetInViewport (el) {
@@ -54,7 +53,7 @@
   function initRTWidgets() {
     const targets = document.querySelectorAll(".rt-widget:not(.active)")
     for(let i = 0; i < targets.length; i++) {
-      if(!isHidden(targets[i]) && isRTWidgetInViewport(targets[i])) { 
+      if(isVisible(targets[i]) && isRTWidgetInViewport(targets[i])) { 
         const widget = document.getElementById(targets[i].id)
         initRTWidget(widget)
       }
