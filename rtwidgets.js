@@ -61,6 +61,7 @@
   }
 
   function recieveRTWidgetMessage(event) {
+    console.debug(event, event.origin, getRTWidgetDomain())
     if(!event || !event.origin || !event.data || !event.data.name) { return }
     if (event.origin !== getRTWidgetDomain()) { return }
     const iframe = document.getElementById(event.data.name)
