@@ -49,9 +49,10 @@
   function initRTWidgets() {
     const targets = document.querySelectorAll(".rt-widget:not(.active)")
     for(let i = 0; i < targets.length; i++) {
-      if(!isRTWidgetInViewport(targets[i])) { return }
-      const widget = document.getElementById(targets[i].id)
-      initRTWidget(widget)
+      if(isRTWidgetInViewport(targets[i])) { 
+        const widget = document.getElementById(targets[i].id)
+        initRTWidget(widget)
+      }
     }
   }
 
