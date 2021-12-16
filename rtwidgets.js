@@ -1,7 +1,7 @@
 (function RTWidgets(){
 
   function isVisible(el) {
-    !(window.getComputedStyle(el).display === "none")
+    return el.offsetWidth > 0 && el.offsetHeight > 0 && !(window.getComputedStyle(el).display === "none")
   }
 
   function isRTWidgetInViewport (el) {
