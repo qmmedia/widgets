@@ -56,7 +56,7 @@
       const widget = document.getElementById(targets[i].id)
       if(isVisible(targets[i]) && isRTWidgetInViewport(targets[i])) { 
         initRTWidget(widget)
-      } else {
+      } else if (!widget.style.height) {
         widget.style.height = "24px";
       }
     }
