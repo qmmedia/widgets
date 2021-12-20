@@ -53,15 +53,16 @@
   function initRTWidgets() {
     const targets = document.querySelectorAll(".rt-widget:not(.active)")
     for(let i = 0; i < targets.length; i++) {
+      const widget = document.getElementById(targets[i].id)
       if(isVisible(targets[i]) && isRTWidgetInViewport(targets[i])) { 
-        const widget = document.getElementById(targets[i].id)
         initRTWidget(widget)
+      } else {
+        widget.style.height = "24px";
       }
     }
   }
 
   function recieveRTWidgetMessage(event) {
-    console.debug(event, event.origin, getRTWidgetDomain())
     if(!event || !event.origin || !event.data || !event.data.name) { return }
     if (event.origin !== getRTWidgetDomain()) { return }
     const iframe = document.getElementById(event.data.name)
@@ -70,9 +71,13 @@
     iframe.style.height = height + 'px'
   }
 
-  window.addEventListener('message', recieveRTWidgetMessage, false);
   window.addEventListener('DOMContentLoaded', initRTWidgets);
   window.addEventListener('load', initRTWidgets);
   window.addEventListener('resize', initRTWidgets);
   window.addEventListener('scroll', initRTWidgets);
+
+  setTimeout(function() {
+    window.addEventListener('message', recieveRTWidgetMessage, false);
+  }, 1000)
+
 })();
