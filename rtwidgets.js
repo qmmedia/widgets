@@ -71,13 +71,10 @@
     iframe.style.height = height + 'px'
   }
 
+  window.addEventListener('message', recieveRTWidgetMessage, false);
   window.addEventListener('DOMContentLoaded', initRTWidgets);
   window.addEventListener('load', initRTWidgets);
   window.addEventListener('resize', initRTWidgets);
   window.addEventListener('scroll', initRTWidgets);
-
-  setTimeout(function() {
-    window.addEventListener('message', recieveRTWidgetMessage, false);
-  }, 1000)
 
 })();
