@@ -9,6 +9,12 @@
     return (r.top >= 0 && r.left >= 0 && r.bottom <= (window.innerHeight || document.documentElement.clientHeight) && r.right <= (window.innerWidth || document.documentElement.clientWidth));
   }
 
+  function isWidgetFarFromTop (el) {
+    const r = el.getBoundingClientRect();
+    const height = (window.innerHeight || document.documentElement.clientHeight)
+    return r.top * 1.5 > height;
+  }
+
   function getRTWidgetDomain() {
     if(!location || !location.hostname) { return }
     const domain = location.hostname.replace(/^[^.]+\./g, "");
@@ -50,14 +56,18 @@
     target.appendChild(iframe);
   }
 
-  function initRTWidgets() {
+  function initRTWidgets(eventType) {
     const targets = document.querySelectorAll(".rt-widget:not(.active)")
     for(let i = 0; i < targets.length; i++) {
       const widget = document.getElementById(targets[i].id)
-      if(isVisible(targets[i]) && isRTWidgetInViewport(targets[i])) { 
-        initRTWidget(widget)
+      if(isVisible(widget) && isRTWidgetInViewport(widget)) {
+        if(eventType === 'load' && isWidgetFarFromTop(widget)) {
+          widget.style.height = "1px";
+        } else {
+          initRTWidget(widget, eventType)
+        }
       } else if (!widget.style.height) {
-        widget.style.height = "24px";
+        widget.style.height = "1px";
       }
     }
   }
@@ -71,10 +81,23 @@
     iframe.style.height = height + 'px'
   }
 
+
   window.addEventListener('message', recieveRTWidgetMessage, false);
-  window.addEventListener('DOMContentLoaded', initRTWidgets);
-  window.addEventListener('load', initRTWidgets);
-  window.addEventListener('resize', initRTWidgets);
-  window.addEventListener('scroll', initRTWidgets);
+
+  window.addEventListener('DOMContentLoaded', function() {
+    initRTWidgets('load')
+  });
+
+  window.addEventListener('load', function() {
+    initRTWidgets('load')
+  });
+
+  window.addEventListener('resize', function() {
+    initRTWidgets('resize')
+  });
+
+  window.addEventListener('scroll', function() {
+    initRTWidgets('scroll')
+  });
 
 })();
