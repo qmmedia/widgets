@@ -17,8 +17,10 @@
 
   function getRTWidgetDomain() {
     if(!location || !location.hostname) { return }
-    const domain = location.hostname.replace(/^[^.]+\./g, "");
-    return domain === "localhost" ? `http://${domain}:3000` : `https://w.${domain}`
+    let hostname = location.hostname
+    const domain = hostname.split('.').slice(-2).join('.')
+    console.log(hostname, domain)
+    return location.hostname === "localhost" ? `${location.protocol}//${domain}:3000` : `${location.protocol}//w.${domain}`
   }
 
   function initRTWidget(target) {
