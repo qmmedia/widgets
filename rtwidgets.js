@@ -34,10 +34,12 @@
 
     const type = target.getAttribute('data-type');
     const fullUrl = target.getAttribute('data-full-url');
+    const c = target.getAttribute('data-c');
     const data = [];
 
     if(id) { data.push('id=' + id ) }
     if(type) { data.push('type=' + type ) }
+    if(c) { data.push('c=' + c ) }
     if(fullUrl) { data.push('fullUrl=' + fullUrl ) }
 
     const url = getRTWidgetDomain()
