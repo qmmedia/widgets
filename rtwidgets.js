@@ -19,7 +19,6 @@
     if(!location || !location.hostname) { return }
     let hostname = location.hostname
     const domain = hostname.split('.').slice(-2).join('.')
-    console.log(hostname, domain)
     return location.hostname === "localhost" ? `${location.protocol}//${domain}:3000` : `${location.protocol}//w.${domain}`
   }
 
@@ -35,12 +34,14 @@
     const type = target.getAttribute('data-type');
     const fullUrl = target.getAttribute('data-full-url');
     const c = target.getAttribute('data-c');
+    const key = target.getAttribute('data-key');
     const data = [];
 
     if(id) { data.push('id=' + id ) }
     if(type) { data.push('type=' + type ) }
     if(c) { data.push('c=' + c ) }
     if(fullUrl) { data.push('fullUrl=' + fullUrl ) }
+    if(key) { data.push('key=' + key ) }
 
     const url = getRTWidgetDomain()
     const pathWithParams = path + '?' + data.join('&');
